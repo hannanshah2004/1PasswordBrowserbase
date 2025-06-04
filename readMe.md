@@ -1,6 +1,6 @@
 # Browserbase 1Password Spotify Automation
 
-This project uses Browserbase Stagehand to automate:
+This project uses Browserbase and Stagehand to automate:
 - Fetching credentials from 1Password (`onePasswordCredentials.ts`).
 - Logging into Spotify with the retrieved credentials (`onePasswordSpotify.ts`).
 
