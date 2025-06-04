@@ -1,0 +1,31 @@
+{
+  "name": "1password",
+  "version": "1.0.0",
+  "description": "1Password Chrome extension automation with Browserbase and Stagehand",
+  "main": "onePassword.js",
+  "scripts": {
+    "start": "ts-node onePassword.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "1password",
+    "browserbase",
+    "stagehand",
+    "automation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@1password/connect": "^1.4.1",
+    "@browserbasehq/sdk": "^2.6.0",
+    "@browserbasehq/stagehand": "^2.2.1",
+    "dotenv": "^16.5.0",
+    "zod": "^3.25.49"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
