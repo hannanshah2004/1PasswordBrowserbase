@@ -10,8 +10,7 @@ if (!SEARCH_INPUT || !EMAIL || !SECRET_KEY || !MASTER_PASSWORD) {
 export async function fetchCredentials(stagehand: Stagehand): Promise<{ username: string; password: string }> {
   const page = stagehand.page;
 
-  // Navigate to 1Password web vault
-  await page.goto('https://my.1password.com/signin?landing-page=%2Fapp%23%2Feverything%2FAllItems', { timeout: 60000 });
+  await page.goto('chrome-extension://aeblfdkhhhdcdjpifhhbdiojplfjncoa/popup/index.html', { timeout: 60000 });
   await page.waitForTimeout(3000);
 
   // Grant clipboard permissions so we can read without a prompt
