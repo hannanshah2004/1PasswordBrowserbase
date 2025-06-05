@@ -1,7 +1,7 @@
 # Browserbase <-> 1Password Automation
 
 This project uses Browserbase and Stagehand to automate:
-- Fetching credentials from 1Password (`onePasswordCredentials.ts`).
+- Logging into 1Password Extension (`OnePasswordSignIn.ts`).
 - Logging into Spotify with the retrieved credentials (`onePasswordSpotify.ts`).
 
 ## Prerequisites
@@ -24,6 +24,6 @@ This project uses Browserbase and Stagehand to automate:
 
 ## Project Structure
 - `onePassword.ts`: Entry point that initializes Stagehand and orchestrates the flow.
-- `onePasswordCredentials.ts`: Retrieves credentials from 1Password.
+- `onePasswordSignIn.ts`: Loads into 1Password extension and Signs In.
 - `onePasswordSpotify.ts`: Automates Spotify login with fetched credentials.
 
