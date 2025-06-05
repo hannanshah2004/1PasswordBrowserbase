@@ -1,10 +1,7 @@
 import { Stagehand } from '@browserbasehq/stagehand';
-import dotenv from 'dotenv';
 import { z } from 'zod';
 
-dotenv.config();
-
-export async function spotifyLogin(stagehand: Stagehand, username: string, password: string): Promise<void> {
+export async function spotifyLogin(stagehand: Stagehand): Promise<void> {
   const page = stagehand.page;
   const TARGET_WEBSITE = process.env.SPOTIFY_LOGIN_URL!;
 
@@ -14,21 +11,23 @@ export async function spotifyLogin(stagehand: Stagehand, username: string, passw
   }
   await page.waitForTimeout(3000);
 
-  await page.act(`Type "${username}" into the email or username field`);
-  await page.waitForTimeout(6000);
-  await page.act('Press Enter');
-  if ((page as any).waitForCaptchaSolve) {
-    await (page as any).waitForCaptchaSolve(60000);
-  }
-  await page.waitForTimeout(6000);
+  // Focus the email input field
+  await page.click('input[placeholder="Email or username"]');
+  await page.waitForTimeout(500);
+  // Trigger 1Password extension fill (Ctrl+\ on Windows)
+  await page.keyboard.press('Control+\\');
+  await page.waitForTimeout(1000);
+  // Navigate to and select the first suggestion
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(2000);
 
-  await page.act('Click the "Log in with password" link or button');
+  await page.waitForLoadState('networkidle');
+  await page.act('Click the "Log in with a password" button');
   await page.waitForTimeout(6000);
+  await page.waitForLoadState('networkidle');
 
-  await page.act('Click the password field');
-  await page.waitForTimeout(6000);  
-  await page.act(`Type "${password}" into the password field`);  
-  await page.waitForTimeout(3000);
+  // Password is already autofilled, so submit form
   await page.act('Press Enter');
   if ((page as any).waitForCaptchaSolve) {
     await (page as any).waitForCaptchaSolve(60000);
@@ -41,8 +40,6 @@ export async function spotifyLogin(stagehand: Stagehand, username: string, passw
     schema: verifySchema,
   });
   console.log(`Login ${result.success ? 'successful' : 'failed'}: ${result.message}`);
-
-  await page.screenshot({ path: 'spotify-login-result.png' });
 
   await stagehand.close()
 }

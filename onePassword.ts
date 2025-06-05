@@ -1,5 +1,4 @@
 import { Stagehand } from '@browserbasehq/stagehand';
-import { fetchCredentials } from './onePasswordCredentials';
 import { spotifyLogin } from './onePasswordSpotify';
 import { onePasswordSignIn } from './onePasswordSignIn';
 import { Browserbase } from '@browserbasehq/sdk';
@@ -31,8 +30,7 @@ dotenv.config();
   await stagehand.init();
   try {
     await onePasswordSignIn(stagehand);
-    const { username, password } = await fetchCredentials(stagehand);
-    await spotifyLogin(stagehand, username, password);
+    await spotifyLogin(stagehand);
   } finally {
     await stagehand.close();
   }
