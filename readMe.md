@@ -5,7 +5,6 @@ This project uses Browserbase and Stagehand to automate:
 - Logging into Spotify with the retrieved credentials (`onePasswordSpotify.ts`).
 
 ## Prerequisites
-- Node.js 18+
 - Create a `.env` file with:
   ```env
   SEARCH_INPUT=<1Password item name>
