@@ -31,8 +31,8 @@ dotenv.config();
   await stagehand.init();
   try {
     await onePasswordSignIn(stagehand);
-    // const { username, password } = await fetchCredentials(stagehand);
-    // await spotifyLogin(stagehand, username, password);
+    const { username, password } = await fetchCredentials(stagehand);
+    await spotifyLogin(stagehand, username, password);
   } finally {
     await stagehand.close();
   }
