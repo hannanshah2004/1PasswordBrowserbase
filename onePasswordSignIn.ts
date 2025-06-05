@@ -1,7 +1,7 @@
 import { Stagehand } from '@browserbasehq/stagehand';
 import 'dotenv/config';
 
-export async function onePasswordSignIn(stagehand: Stagehand, extensionId: string): Promise<Stagehand> {
+export async function onePasswordSignIn(stagehand: Stagehand): Promise<Stagehand> {
   const page = stagehand.page;
   const EMAIL = process.env.EMAIL!;
   const SECRET_KEY = process.env.SECRET_KEY!;
@@ -10,17 +10,20 @@ export async function onePasswordSignIn(stagehand: Stagehand, extensionId: strin
   // Give the extension time to initialize before we navigate
   await page.waitForTimeout(5000);
 
-  // Navigate to a host page to allow extension content scripts to inject
-  await page.goto('https://example.com', { timeout: 60000, waitUntil: 'networkidle' });
-
-  // Open the 1Password popup page directly in the same context so the extension is available
-  const popup = await page.context().newPage();
-  await popup.goto(
-    `chrome-extension://${extensionId}/app/app.html#/page/welcome?language=en`,
+  // Derive the Chrome extension GUID from loaded pages
+  const context = page.context();
+  const urls = context.pages().map(p => p.url());
+  const extensionPageUrl = urls.find(u => u.startsWith('chrome-extension://'));
+  if (!extensionPageUrl) throw new Error('Extension page not found in context.pages()');
+  const extGuid = new URL(extensionPageUrl).hostname;
+  console.log('Using extension GUID:', extGuid);
+  // Navigate into the 1Password popup UI using Stagehand's page
+  await page.goto(
+    `chrome-extension://${extGuid}/app/app.html#/page/welcome?language=en`,
     { timeout: 60000, waitUntil: 'networkidle' }
   );
-  await popup.waitForLoadState('networkidle');
-  console.log('Popup URL:', popup.url());
+  await page.waitForLoadState('networkidle');
+  console.log('Extension popup loaded at', page.url());
 
   // Wait for the Continue button to appear before clicking
   await page.waitForSelector('text=Continue', { timeout: 30000 });

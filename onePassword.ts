@@ -29,22 +29,8 @@ dotenv.config();
   });
 
   await stagehand.init();
-  console.log(
-    stagehand.page.context()
-      .pages()
-      .map((p) => p.url())
-  );
-
-  // Verify the extension injection via content script
-  await stagehand.page.goto('https://example.com', { timeout: 60000, waitUntil: 'networkidle' });
-  await stagehand.page.waitForFunction(
-    () => document.title.includes('🔑 Extension Loaded'),
-    { timeout: 10000 }
-  );
-  console.log('✅ Extension injection verified');
-
   try {
-    await onePasswordSignIn(stagehand, extension.id);
+    await onePasswordSignIn(stagehand);
     // const { username, password } = await fetchCredentials(stagehand);
     // await spotifyLogin(stagehand, username, password);
   } finally {
