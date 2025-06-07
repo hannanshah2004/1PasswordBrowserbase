@@ -3,6 +3,7 @@
 This project uses Browserbase and Stagehand to automate:
 - Logging into 1Password Extension (`OnePasswordSignIn.ts`).
 - Logging into Spotify with the retrieved credentials (`onePasswordSpotify.ts`).
+- Logging into Hacker News with the retrieved credentials (`onePasswordHackerNews.ts`).
 
 ## Prerequisites
 - Create a `.env` file with:
@@ -15,6 +16,7 @@ This project uses Browserbase and Stagehand to automate:
   BROWSERBASE_PROJECT_ID=<Browserbase project ID>
   ANTHROPIC_API_KEY=<Anthropic API key>
   SPOTIFY_LOGIN_URL=<Spotify login URL>
+  HACKER_LOGIN_URL=<Hacker News login URL>
   ```
 
 ## Usage
@@ -25,4 +27,6 @@ This project uses Browserbase and Stagehand to automate:
 - `onePassword.ts`: Entry point that initializes Stagehand and orchestrates the flow.
 - `onePasswordSignIn.ts`: Loads into 1Password extension and Signs In.
 - `onePasswordSpotify.ts`: Automates Spotify login with fetched credentials.
+- `onePasswordHackerNews.ts`: Automates Hacker News login with fetched credentials.
+
 
