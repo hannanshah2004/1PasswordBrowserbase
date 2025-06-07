@@ -4,6 +4,7 @@ import { onePasswordSignIn } from './onePasswordSignIn';
 import { Browserbase } from '@browserbasehq/sdk';
 import fs from 'fs';
 import dotenv from 'dotenv';
+import { hackerNewsLogin } from './onePasswordHackerNews';
 
 dotenv.config();
 
@@ -30,7 +31,8 @@ dotenv.config();
   await stagehand.init();
   try {
     await onePasswordSignIn(stagehand);
-    await spotifyLogin(stagehand);
+    //await spotifyLogin(stagehand);
+    await hackerNewsLogin(stagehand);
   } finally {
     await stagehand.close();
   }
